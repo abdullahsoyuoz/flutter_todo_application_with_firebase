@@ -3,7 +3,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_statusbar_manager/flutter_statusbar_manager.dart';
 import 'package:todo_app/Page/TodoSetting.dart';
-import 'package:todo_app/Services/firestoreAuthService.dart';
 import 'package:todo_app/Widgets/TodoAppBar.dart';
 import 'package:todo_app/Widgets/TodoBody.dart';
 import 'package:todo_app/Util/TodoWaiting.dart';

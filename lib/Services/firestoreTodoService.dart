@@ -5,9 +5,20 @@ import 'package:todo_app/Model/todo.dart';
 import 'package:todo_app/Services/firestoreAuthService.dart';
 
 class TodoService with ChangeNotifier, DiagnosticableTreeMixin {
+  //  --------------------------------------------------------------------------- INIT
+
   List<Todo> currentList = [];
   List<Todo> fetchingList = [];
   List<Todo> queryResultList = [];
+
+  CollectionReference getCollection() {
+    return FirebaseFirestore.instance.collection("todos");
+  }
+
+  String generateDocPath(Todo item) {
+    return firebaseAuthService.auth.currentUser.uid + "${item.content}";
+  }
+
   //  --------------------------------------------------------------------------- GET
 
   Future<void> fetchData({bool isQuery = false}) async {
@@ -26,20 +37,21 @@ class TodoService with ChangeNotifier, DiagnosticableTreeMixin {
     print("fetching...");
   }
 
-  Stream<QuerySnapshot> getDataStream() {
-    return getCollection()
-        .where("uid", isEqualTo: firebaseAuthService.auth.currentUser.uid)
-        .orderBy('time', descending: false)
-        .orderBy('content', descending: false)
-        .snapshots();
-  }
+  // Stream<QuerySnapshot> getDataStream() {
+  //   return getCollection()
+  //       .where("uid", isEqualTo: firebaseAuthService.auth.currentUser.uid)
+  //       .orderBy('time', descending: false)
+  //       .orderBy('content', descending: false)
+  //       .snapshots();
+  // }
 
-  Future<QuerySnapshot> getDataFuture() async {
-    return getCollection()
-        .where('uid', isEqualTo: firebaseAuthService.auth.currentUser.uid)
-        .orderBy("content", descending: false)
-        .get();
-  }
+  // Future<QuerySnapshot> getDataFuture() async {
+  //   return getCollection()
+  //       .where('uid', isEqualTo: firebaseAuthService.auth.currentUser.uid)
+  //       .orderBy("content", descending: false)
+  //       .get();
+  // }
+  // TODO:
 
   //  --------------------------------------------------------------------------- CRUD
 
@@ -114,22 +126,6 @@ class TodoService with ChangeNotifier, DiagnosticableTreeMixin {
   }
 
   //  --------------------------------------------------------------------------- UTIL
-
-  CollectionReference getCollection() {
-    return FirebaseFirestore.instance.collection("todos");
-  }
-
-  // String getCurrentUserEmail() {
-  //   return FirebaseAuth.instance.currentUser.email;
-  // }
-
-  // String getCurrentUserUid() {
-  //   return FirebaseAuth.instance.currentUser.uid;
-  // }
-
-  String generateDocPath(Todo item) {
-    return firebaseAuthService.auth.currentUser.uid + "${item.content}";
-  }
 
   void syncListFromFetch() {
     currentList = fetchingList;

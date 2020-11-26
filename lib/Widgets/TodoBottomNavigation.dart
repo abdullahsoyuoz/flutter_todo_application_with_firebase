@@ -4,7 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_app/Services/firestoreAuthService.dart';
-import 'package:todo_app/Services/todoService.dart';
+import 'package:todo_app/Services/firestoreTodoService.dart';
 import 'package:todo_app/Model/todo.dart';
 import 'package:todo_app/Util/utility.dart';
 
